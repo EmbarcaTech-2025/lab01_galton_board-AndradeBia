@@ -28,4 +28,4 @@ O projeto permite alternar entre diferentes visualizações:
     * `PARTICLE_X_DEFLECTION_AMOUNT`: O quanto uma partícula se desvia horizontalmente ao colidir com um pino.
     * **`PROBABILITY_RIGHT_DEFLECTION_PERCENT`**: A chance (em porcentagem, de 0 a 100) de uma partícula desviar para a **direita** ao encontrar um pino. Isso permite enviesar a simulação! Um valor de `50` resulta em chances iguais (50/50).
 
-Este é um projeto divertido para explorar conceitos de probabilidade, estatística e visualização de dados de forma interativa com a Raspberry Pi Pico W!
+Este é um projeto divertido para explorar conceitos de probabilidade, estatística e visualização de dados de forma interativa com a BitDogLab
