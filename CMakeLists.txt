@@ -16,7 +16,7 @@ else()
     set(USERHOME $ENV{HOME})
 endif()
 set(sdkVersion 1.5.1)
-set(toolchainVersion 13_2_Rel1)
+set(toolchainVersion 13_3_Rel1)
 set(picotoolVersion 2.0.0)
 set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
 if (EXISTS ${picoVscode})
@@ -28,40 +28,43 @@ set(PICO_BOARD pico_w CACHE STRING "Board type")
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(lab-01-galton-board C CXX ASM)
+# Define o nome do projeto como 'Galton'
+project(Galton C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
-# Add executable. Default name is the project name, version 0.1
-
-add_executable(lab-01-galton-board
-  ./src/lab-01-galton-board.c 
-  ./include/ssd1306_i2c.c
-)
-
-pico_set_program_name(lab-01-galton-board "lab-01-galton-board")
-pico_set_program_version(lab-01-galton-board "0.1")
-
-# Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(lab-01-galton-board 0)
-pico_enable_stdio_usb(lab-01-galton-board 1)
-
-# Add the standard library to the build
-target_link_libraries(lab-01-galton-board
-        pico_stdlib)
-
-# Add the standard include files to the build
-target_include_directories(lab-01-galton-board PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}
-        ./include
-)
-
-# Add any user requested libraries
-target_link_libraries(lab-01-galton-board 
-        hardware_i2c
-        
+# Add executable.
+# O nome do executável será 'Galton'
+add_executable(Galton
+        main.c              # Arquivo principal da aplicação
+        particle_system.c   # Sistema de partículas
+        board_renderer.c    # Renderizador do tabuleiro/telas
+        src/oled_driver.c   # Driver OLED existente na pasta src
+        inc/ssd1306_i2c.c   # Funções base I2C do OLED existentes na pasta inc
         )
 
-pico_add_extra_outputs(lab-01-galton-board)
+pico_set_program_name(Galton "Galton") # Define o nome do programa para os binários
+pico_set_program_version(Galton "0.1")       # Define a versão do programa
 
+# Modifique as linhas abaixo para habilitar/desabilitar saída via UART/USB
+pico_enable_stdio_uart(Galton 0)
+pico_enable_stdio_usb(Galton 1)
+
+# Adiciona a biblioteca padrão do Pico SDK ao build
+target_link_libraries(Galton
+        pico_stdlib)
+
+# Adiciona os diretórios de include padrão ao build
+target_include_directories(Galton PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}       # Para galton_config.h, particle_system.h, board_renderer.h na raiz
+  ${CMAKE_CURRENT_LIST_DIR}/inc  # Garante que a pasta inc seja incluída (para headers do OLED)
+  ${CMAKE_CURRENT_LIST_DIR}/src  # Garante que a pasta src seja incluída (se houver headers lá, como oled_driver.h)
+)
+
+# Adiciona quaisquer bibliotecas solicitadas pelo usuário
+target_link_libraries(Galton
+        hardware_i2c
+        )
+
+pico_add_extra_outputs(Galton)
