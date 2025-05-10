@@ -1,4 +1,4 @@
-# Tábua de Galton no Display OLED com Raspberry Pi Pico W
+# Galton BitDogLab
 
 Este projeto é uma simulação interativa da Tábua de Galton, projetada para no BitDogLab.
 
